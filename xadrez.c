@@ -1,22 +1,25 @@
 #include <stdio.h>
-// Desafio Novato
-int main(void) {
-    // 1) Configuração: quantidade de casas para cada peça (valores definidos no código)
-    const int passosTorre  = 5; // Torre: 5 casas para a direita
-    const int passosBispo  = 5; // Bispo: 5 casas na diagonal para cima e à direita
-    const int passosRainha = 8; // Rainha: 8 casas para a esquerda
+// Desafio Jogo Xadrez
 
-    // A torre se move em linha reta: aqui simulamos 5 passos para a direita.
-    // A cada casa, imprimimos a direção "Direita".
+int main(void) {
+   
+    // Configuração: quantidade de casas para cada peça
+    const int passosTorre  = 5; // Torre: 5 casas para a direita
+    const int passosBispo  = 5; // Bispo: 5 casas na diagonal "Cima Direita"
+    const int passosRainha = 8; // Rainha: 8 casas para a esquerda
+    const int passosVerticaisCavalo = 2; // duas casas para baixo
+    const int passosHorizontaisCavalo = 1; // uma casa para a esquerda
+
+     
     printf("Movimento da Torre (%d casas para a direita):\n", passosTorre);
     for (int i = 1; i <= passosTorre; i++) {
         printf("Direita\n");
     }
 
-    // Linha em branco para separar as saídas
+    // Separador visual
     printf("\n");
 
-    // O bispo se move na diagonal: aqui simulamos 5 passos na diagonal "Cima Direita".
+   
     printf("Movimento do Bispo (%d casas na diagonal para cima e à direita):\n", passosBispo);
     int contadorBispo = 0;
     while (contadorBispo < passosBispo) {
@@ -24,10 +27,9 @@ int main(void) {
         contadorBispo++;
     }
 
-    // Linha em branco para separar as saídas
+    // Separador visual
     printf("\n");
 
-    // A rainha pode se mover em todas as direções: aqui simulamos 8 passos para a esquerda.
     printf("Movimento da Rainha (%d casas para a esquerda):\n", passosRainha);
     int contadorRainha = 0;
     do {
@@ -35,6 +37,30 @@ int main(void) {
         contadorRainha++;
     } while (contadorRainha < passosRainha);
 
-    // 5) Fim do programa
+    // Separador visual exigido antes do Cavalo
+    printf("\n");
+
+    printf("Movimento do Cavalo (2 casas para baixo e 1 para a esquerda):\n");
+
+    // --- Segmento vertical: duas casas para BAIXO ---
+    for (int passoV = 0; passoV < passosVerticaisCavalo; passoV++) {
+        int unidade = 0;            // conta a "unidade" de movimento dentro desta casa
+        while (unidade < 1) {       // este while representa a execução por casa (aninhamento)
+            printf("Baixo\n");
+            unidade++;
+        }
+    }
+
+    // --- Segmento horizontal: uma casa para ESQUERDA ---
+    for (int passoH = 0; passoH < passosHorizontaisCavalo; passoH++) {
+        int unidade = 0;
+        while (unidade < 1) {
+            printf("Esquerda\n");
+            unidade++;
+        }
+    }
+     // Separador visual para finalizar o codigo
+    printf("\n");
+    // Fim
     return 0;
 }
