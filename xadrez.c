@@ -1,66 +1,106 @@
 #include <stdio.h>
 // Desafio Jogo Xadrez
+//Nivel Novato, Aventureiro e Mestre
+ 
+/* ========= PROTÓTIPOS ========= */
+void mover_torre_direita_rec(int passos);
+void mover_rainha_esquerda_rec(int passos);
+void mover_bispo_cima_direita_rec(int passos);
+void imprimir_passo_bispo_com_loops_aninhados(void); // externo: vertical ; interno: horizontal
+void mover_cavalo_cima_direita_loops_complexos(void);
 
 int main(void) {
-   
-    // Configuração: quantidade de casas para cada peça
-    const int passosTorre  = 5; // Torre: 5 casas para a direita
-    const int passosBispo  = 5; // Bispo: 5 casas na diagonal "Cima Direita"
-    const int passosRainha = 8; // Rainha: 8 casas para a esquerda
-    const int passosVerticaisCavalo = 2; // duas casas para baixo
-    const int passosHorizontaisCavalo = 1; // uma casa para a esquerda
+    /* ---------- Configuração (valores definidos no código) ---------- */
+    const int passosTorre  = 5; // Torre: 5 casas para a Direita
+    const int passosBispo  = 5; // Bispo: 5 casas na diagonal Cima Direita
+    const int passosRainha = 8; // Rainha: 8 casas para a Esquerda
 
-     
-    printf("Movimento da Torre (%d casas para a direita):\n", passosTorre);
-    for (int i = 1; i <= passosTorre; i++) {
-        printf("Direita\n");
-    }
+    /* ---------- Torre (Recursiva) ---------- */
+    printf("Movimento da Torre (recursivo, %d casas para a direita):\n", passosTorre);
+    mover_torre_direita_rec(passosTorre);
 
-    // Separador visual
     printf("\n");
 
-   
-    printf("Movimento do Bispo (%d casas na diagonal para cima e à direita):\n", passosBispo);
-    int contadorBispo = 0;
-    while (contadorBispo < passosBispo) {
-        printf("Cima Direita\n");
-        contadorBispo++;
-    }
+    /* ---------- Bispo (Recursivo + Loops Aninhados por passo) ---------- */
+    printf("Movimento do Bispo (recursivo, %d casas na diagonal Cima Direita):\n", passosBispo);
+    mover_bispo_cima_direita_rec(passosBispo);
 
-    // Separador visual
     printf("\n");
 
-    printf("Movimento da Rainha (%d casas para a esquerda):\n", passosRainha);
-    int contadorRainha = 0;
-    do {
-        printf("Esquerda\n");
-        contadorRainha++;
-    } while (contadorRainha < passosRainha);
+    /* ---------- Rainha (Recursiva) ---------- */
+    printf("Movimento da Rainha (recursivo, %d casas para a esquerda):\n", passosRainha);
+    mover_rainha_esquerda_rec(passosRainha);
 
-    // Separador visual exigido antes do Cavalo
     printf("\n");
 
-    printf("Movimento do Cavalo (2 casas para baixo e 1 para a esquerda):\n");
+    /* ---------- Cavalo (Loops aninhados com múltiplas variáveis/condições + continue/break) ---------- */
+    mover_cavalo_cima_direita_loops_complexos();
 
-    // --- Segmento vertical: duas casas para BAIXO ---
-    for (int passoV = 0; passoV < passosVerticaisCavalo; passoV++) {
-        int unidade = 0;            // conta a "unidade" de movimento dentro desta casa
-        while (unidade < 1) {       // este while representa a execução por casa (aninhamento)
-            printf("Baixo\n");
-            unidade++;
-        }
-    }
-
-    // --- Segmento horizontal: uma casa para ESQUERDA ---
-    for (int passoH = 0; passoH < passosHorizontaisCavalo; passoH++) {
-        int unidade = 0;
-        while (unidade < 1) {
-            printf("Esquerda\n");
-            unidade++;
-        }
-    }
-     // Separador visual para finalizar o codigo
-    printf("\n");
-    // Fim
     return 0;
+}
+
+/* ========= IMPLEMENTAÇÕES ========= */
+
+void mover_torre_direita_rec(int passos) {
+    if (passos <= 0) return;         // caso base
+    printf("Direita\n");             // imprime uma casa
+    mover_torre_direita_rec(passos - 1); // passo recursivo
+}
+
+void mover_rainha_esquerda_rec(int passos) {
+    if (passos <= 0) return;
+    printf("Esquerda\n");
+    mover_rainha_esquerda_rec(passos - 1);
+}
+
+void mover_bispo_cima_direita_rec(int passos) {
+    if (passos <= 0) return;
+    imprimir_passo_bispo_com_loops_aninhados(); // cumpre o requisito de loops aninhados
+    mover_bispo_cima_direita_rec(passos - 1);
+}
+void imprimir_passo_bispo_com_loops_aninhados(void) {
+    for (int v = 0; v < 1; v++) {         // externo: vertical
+        for (int h = 0; h < 1; h++) {     // interno: horizontal
+            // Mantemos a saída padronizada como no nível básico (combinação para diagonal):
+            printf("Cima Direita\n");
+        }
+    }
+}
+
+void mover_cavalo_cima_direita_loops_complexos(void) {
+    printf("Movimento do Cavalo (loops complexos, 2 casas para cima e 1 para a direita):\n");
+
+    // v = passos verticais executados; h = passos horizontais executados
+    for (int v = 0, h = 0; (v < 2) || (h < 1); /* sem incremento aqui */) {
+        // Fase vertical (duas casas para Cima)
+        if (v < 2) {
+            int unidade = 0; // "unidade" por casa
+            while (unidade < 1) {
+                printf("Cima\n");
+                v++;        // concluímos 1 casa vertical
+                unidade++;  // finaliza a unidade
+            }
+            // Após fazer uma casa vertical, continuamos a próxima iteração do for imediatamente.
+            // Enquanto v < 2, imprimimos a segunda "Cima" antes de passar para "Direita".
+            continue; // (controla o fluxo do laço externo)
+        }
+
+        // Fase horizontal (uma casa para a Direita)
+        if (h < 1) {
+            int unidade = 0;
+            while (unidade < 1) {
+                printf("Direita\n");
+                h++;
+                unidade++;
+            }
+            
+            continue;
+        }
+
+        break; // uso de 'break' conforme solicitado
+        
+    }
+
+    // Separador visual para finalizar o codigo
+    printf("\n");
 }
