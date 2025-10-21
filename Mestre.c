@@ -1,0 +1,112 @@
+// Desafio Final: Criando Movimentos Complexos no Xadrez (C)
+
+#include <stdio.h>
+
+/* ========= PROTÓTIPOS ========= */
+void mover_torre_direita_rec(int passos);
+void mover_rainha_esquerda_rec(int passos);
+void mover_bispo_cima_direita_rec(int passos);
+void imprimir_passo_bispo_com_loops_aninhados(void); // externo: vertical ; interno: horizontal
+void mover_cavalo_cima_direita_loops_complexos(void);
+
+int main(void) {
+    /* ---------- Configuração (valores definidos no código) ---------- */
+    const int passosTorre  = 5; // Torre: 5 casas para a Direita
+    const int passosBispo  = 5; // Bispo: 5 casas na diagonal Cima Direita
+    const int passosRainha = 8; // Rainha: 8 casas para a Esquerda
+
+    /* ---------- Torre (Recursiva) ---------- */
+    printf("Movimento da Torre (recursivo, %d casas para a direita):\n", passosTorre);
+    mover_torre_direita_rec(passosTorre);
+
+    printf("\n");
+
+    /* ---------- Bispo (Recursivo + Loops Aninhados por passo) ---------- */
+    printf("Movimento do Bispo (recursivo, %d casas na diagonal Cima Direita):\n", passosBispo);
+    mover_bispo_cima_direita_rec(passosBispo);
+
+    printf("\n");
+
+    /* ---------- Rainha (Recursiva) ---------- */
+    printf("Movimento da Rainha (recursivo, %d casas para a esquerda):\n", passosRainha);
+    mover_rainha_esquerda_rec(passosRainha);
+
+    printf("\n");
+
+    /* ---------- Cavalo (Loops aninhados com múltiplas variáveis/condições + continue/break) ---------- */
+    mover_cavalo_cima_direita_loops_complexos();
+
+    return 0;
+}
+
+/* ========= IMPLEMENTAÇÕES ========= */
+
+/* Torre: recursão simples. Caso base: 0 passos. Caso recursivo: imprime e chama com passos-1. */
+void mover_torre_direita_rec(int passos) {
+    if (passos <= 0) return;         // caso base
+    printf("Direita\n");             // imprime uma casa
+    mover_torre_direita_rec(passos - 1); // passo recursivo
+}
+
+/* Rainha: recursão simples análoga à Torre, mas para a esquerda. */
+void mover_rainha_esquerda_rec(int passos) {
+    if (passos <= 0) return;
+    printf("Esquerda\n");
+    mover_rainha_esquerda_rec(passos - 1);
+}
+
+
+void mover_bispo_cima_direita_rec(int passos) {
+    if (passos <= 0) return;
+    imprimir_passo_bispo_com_loops_aninhados(); // cumpre o requisito de loops aninhados
+    mover_bispo_cima_direita_rec(passos - 1);
+}
+
+void imprimir_passo_bispo_com_loops_aninhados(void) {
+    for (int v = 0; v < 1; v++) {         // externo: vertical
+        for (int h = 0; h < 1; h++) {     // interno: horizontal
+            // Mantemos a saída padronizada como no nível básico (combinação para diagonal):
+            printf("Cima Direita\n");
+        }
+    }
+}
+
+
+void mover_cavalo_cima_direita_loops_complexos(void) {
+    printf("Movimento do Cavalo (loops complexos, 2 casas para cima e 1 para a direita):\n");
+
+    // v = passos verticais executados; h = passos horizontais executados
+    for (int v = 0, h = 0; (v < 2) || (h < 1); /* sem incremento aqui */) {
+        // Fase vertical (duas casas para Cima)
+        if (v < 2) {
+            int unidade = 0; // "unidade" por casa
+            while (unidade < 1) {
+                printf("Cima\n");
+                v++;        // concluímos 1 casa vertical
+                unidade++;  // finaliza a unidade
+            }
+            // Após fazer uma casa vertical, continuamos a próxima iteração do for imediatamente.
+            // Enquanto v < 2, imprimimos a segunda "Cima" antes de passar para "Direita".
+            continue; // (controla o fluxo do laço externo)
+        }
+
+        // Fase horizontal (uma casa para a Direita)
+        if (h < 1) {
+            int unidade = 0;
+            while (unidade < 1) {
+                printf("Direita\n");
+                h++;
+                unidade++;
+            }
+            // Neste ponto, possivelmente terminamos todo o "L".
+            continue;
+        }
+
+        break; // uso de 'break' conforme solicitado
+
+        
+    }
+
+    // Separador visual para finalizar o codigo
+    printf("\n");
+}
