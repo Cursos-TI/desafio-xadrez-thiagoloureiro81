@@ -41,27 +41,23 @@ int main(void) {
 
 /* ========= IMPLEMENTAÇÕES ========= */
 
-/* Torre: recursão simples. Caso base: 0 passos. Caso recursivo: imprime e chama com passos-1. */
 void mover_torre_direita_rec(int passos) {
     if (passos <= 0) return;         // caso base
     printf("Direita\n");             // imprime uma casa
     mover_torre_direita_rec(passos - 1); // passo recursivo
 }
 
-/* Rainha: recursão simples análoga à Torre, mas para a esquerda. */
 void mover_rainha_esquerda_rec(int passos) {
     if (passos <= 0) return;
     printf("Esquerda\n");
     mover_rainha_esquerda_rec(passos - 1);
 }
 
-
 void mover_bispo_cima_direita_rec(int passos) {
     if (passos <= 0) return;
     imprimir_passo_bispo_com_loops_aninhados(); // cumpre o requisito de loops aninhados
     mover_bispo_cima_direita_rec(passos - 1);
 }
-
 void imprimir_passo_bispo_com_loops_aninhados(void) {
     for (int v = 0; v < 1; v++) {         // externo: vertical
         for (int h = 0; h < 1; h++) {     // interno: horizontal
@@ -70,7 +66,6 @@ void imprimir_passo_bispo_com_loops_aninhados(void) {
         }
     }
 }
-
 
 void mover_cavalo_cima_direita_loops_complexos(void) {
     printf("Movimento do Cavalo (loops complexos, 2 casas para cima e 1 para a direita):\n");
@@ -98,12 +93,11 @@ void mover_cavalo_cima_direita_loops_complexos(void) {
                 h++;
                 unidade++;
             }
-            // Neste ponto, possivelmente terminamos todo o "L".
+            
             continue;
         }
 
         break; // uso de 'break' conforme solicitado
-
         
     }
 
