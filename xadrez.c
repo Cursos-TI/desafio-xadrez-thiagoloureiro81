@@ -1,5 +1,5 @@
 #include <stdio.h>
-
+// Desafio Novato
 int main(void) {
     // 1) Configuração: quantidade de casas para cada peça (valores definidos no código)
     const int passosTorre  = 5; // Torre: 5 casas para a direita
